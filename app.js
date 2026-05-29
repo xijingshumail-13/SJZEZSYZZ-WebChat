@@ -1,5 +1,5 @@
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
   getFirestore,
@@ -8,8 +8,8 @@ import {
   query,
   orderBy,
   onSnapshot
-} from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyBFbCfpfKyOVfEKKYT3lJkXNQ6KaVdHuB8",
   authDomain: "sjzezsyzz-webchat.firebaseapp.com",
@@ -20,33 +20,52 @@ const firebaseConfig = {
   measurementId: "G-0WYZYW78ZW"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
+const db = getFirestore(app);
+
 const chatDiv = document.getElementById("chat");
 
 window.sendMessage = async function () {
-  const input = document.getElementById("messageInput");
 
-  await addDoc(collection(db, "messages"), {
-    text: input.value,
-    time: Date.now()
-  });
+  const input =
+    document.getElementById("messageInput");
+
+  if (!input.value.trim()) return;
+
+  await addDoc(
+    collection(db, "messages"),
+    {
+      text: input.value,
+      time: Date.now()
+    }
+  );
 
   input.value = "";
 };
 
-const q = query(
-  collection(db, "messages"),
-  orderBy("time")
-);
+const q =
+  query(
+    collection(db, "messages"),
+    orderBy("time")
+  );
 
 onSnapshot(q, (snapshot) => {
+
   chatDiv.innerHTML = "";
 
   snapshot.forEach((doc) => {
-    const msg = document.createElement("div");
-    msg.textContent = doc.data().text;
-    chatDiv.appendChild(msg);
+
+    const data = doc.data();
+
+    const div =
+      document.createElement("div");
+
+    div.className = "message";
+
+    div.textContent = data.text;
+
+    chatDiv.appendChild(div);
   });
+
 });
