@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
-  <title>Chat</title>
+  <title>聊天室</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div id="chat"></div>
+  <div id="chat"></div>
 
-<input id="messageInput">
-<button onclick="sendMessage()">发送</button>
+  <div class="input-area">
+    <input
+      id="messageInput"
+      placeholder="输入消息..."
+    >
 
-<script type="module" src="app.js"></script>
+    <button onclick="sendMessage()">
+      发送
+    </button>
+  </div>
+
+  <script type="module" src="app.js"></script>
+
 </body>
 </html>
